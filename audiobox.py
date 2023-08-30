@@ -58,7 +58,7 @@ print("Audio map loaded.")
 # Initialize Pygame mixer
 def initialize_pygame_mixer():
     pygame.mixer.init()
-#    pygame.mixer.music.set_volume(1)  # Set default volume
+    pygame.mixer.music.set_volume(0.5)  # Set default volume
     
 #last_CLK_state = GPIO.input(CLK_PIN)
 
