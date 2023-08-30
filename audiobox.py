@@ -6,17 +6,17 @@ from adafruit_pn532.i2c import PN532_I2C
 import pygame
 import threading
 import time
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 # Configuration
-#CLK_PIN = 18
-#DT_PIN = 17
-#SW_PIN = 27
+CLK_PIN = 18
+DT_PIN = 17
+SW_PIN = 27
 
 # Initialize GPIO
-#GPIO.setmode(GPIO.BCM)
-#GPIO.setup([CLK_PIN, DT_PIN, SW_PIN], GPIO.IN, pull_up_down=GPIO.PUD_UP)
-#print("GPIO pins configured.")
+GPIO.setmode(GPIO.BCM)
+GPIO.setup([CLK_PIN, DT_PIN, SW_PIN], GPIO.IN, pull_up_down=GPIO.PUD_UP)
+print("GPIO pins configured.")
 
 # Set working directory
 abspath = os.path.abspath(__file__)
@@ -60,7 +60,7 @@ def initialize_pygame_mixer():
     pygame.mixer.init()
     pygame.mixer.music.set_volume(0.5)  # Set default volume
     
-#last_CLK_state = GPIO.input(CLK_PIN)
+last_CLK_state = GPIO.input(CLK_PIN)
 
 # Play audio
 def play_audio(file_path):
@@ -75,40 +75,40 @@ def stop_audio():
     pygame.mixer.music.stop()
 
 # Volume control
-#def volume_control(channel):
-#    global last_CLK_state
-#    CLK_state = GPIO.input(CLK_PIN)
-#    DT_state = GPIO.input(DT_PIN)
-#    print("Volume control event detected.")
-#    print("CLK:", CLK_state)
-#    print("DT:", DT_state)
-#    if CLK_state != last_CLK_state:
-#        if DT_state != CLK_state:
-#            pygame.mixer.music.set_volume(min(pygame.mixer.music.get_volume() + 0.1, 1.0))
-#            print("Volume increased:", pygame.mixer.music.get_volume())
-#        else:
-#            pygame.mixer.music.set_volume(max(pygame.mixer.music.get_volume() - 0.1, 0.0))
-#            print("Volume decreased:", pygame.mixer.music.get_volume())
-#    last_CLK_state = CLK_state
+def volume_control(channel):
+    global last_CLK_state
+    CLK_state = GPIO.input(CLK_PIN)
+    DT_state = GPIO.input(DT_PIN)
+    print("Volume control event detected.")
+    print("CLK:", CLK_state)
+    print("DT:", DT_state)
+    if CLK_state != last_CLK_state:
+        if DT_state != CLK_state:
+            pygame.mixer.music.set_volume(min(pygame.mixer.music.get_volume() + 0.1, 1.0))
+            print("Volume increased:", pygame.mixer.music.get_volume())
+        else:
+            pygame.mixer.music.set_volume(max(pygame.mixer.music.get_volume() - 0.1, 0.0))
+            print("Volume decreased:", pygame.mixer.music.get_volume())
+    last_CLK_state = CLK_state
 
 # Set up switch pin
-#GPIO.setup(SW_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-#print("Switch pin configured.")
+GPIO.setup(SW_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+print("Switch pin configured.")
 
 # Switch press event
-#def switch_pressed(channel):
-#    print("Switch pressed!")
+def switch_pressed(channel):
+    print("Switch pressed!")
 
 # Remove existing event detection for the switch pin
-#GPIO.remove_event_detect(SW_PIN)
+GPIO.remove_event_detect(SW_PIN)
 
 # Attach switch press event
-#GPIO.add_event_detect(SW_PIN, GPIO.FALLING, callback=switch_pressed, bouncetime=300)
-#print("Switch event attached to pin.")
+GPIO.add_event_detect(SW_PIN, GPIO.FALLING, callback=switch_pressed, bouncetime=300)
+print("Switch event attached to pin.")
 
 # Attach volume control event
-#GPIO.add_event_detect(CLK_PIN, GPIO.FALLING, callback=volume_control, bouncetime=50)
-#print("Volume control attached to pins.")
+GPIO.add_event_detect(CLK_PIN, GPIO.FALLING, callback=volume_control, bouncetime=50)
+print("Volume control attached to pins.")
 
 # NFC tag scanning
 def scan_nfc_tag():
@@ -176,4 +176,4 @@ except KeyboardInterrupt:
     nfc_thread.join()
     # Enregistrer la liste des musiques associées aux tags NFC dans le fichier audio_map.txt avant de quitter
     save_audio_map(nfc_audio_map)
-#    GPIO.cleanup()
+    GPIO.cleanup()
