@@ -9,9 +9,9 @@ import time
 import RPi.GPIO as GPIO
 
 # Configuration
-CLK_PIN = 18
-DT_PIN = 17
-SW_PIN = 27
+CLK_PIN = 22  # Choose a suitable GPIO pin number
+DT_PIN = 23   # Choose a suitable GPIO pin number
+SW_PIN = 24   # Choose a suitable GPIO pin number
 
 # Initialize GPIO
 GPIO.setmode(GPIO.BCM)
@@ -82,13 +82,13 @@ def volume_control(channel):
     print("Volume control event detected.")
     print("CLK:", CLK_state)
     print("DT:", DT_state)
-    if CLK_state != last_CLK_state:
-        if DT_state != CLK_state:
-            pygame.mixer.music.set_volume(min(pygame.mixer.music.get_volume() + 0.1, 1.0))
-            print("Volume increased:", pygame.mixer.music.get_volume())
-        else:
-            pygame.mixer.music.set_volume(max(pygame.mixer.music.get_volume() - 0.1, 0.0))
-            print("Volume decreased:", pygame.mixer.music.get_volume())
+#    if CLK_state != last_CLK_state:
+    if DT_state != CLK_state:
+        pygame.mixer.music.set_volume(min(pygame.mixer.music.get_volume() + 0.05, 1.0))
+        print("Volume increased:", pygame.mixer.music.get_volume())
+    else:
+        pygame.mixer.music.set_volume(max(pygame.mixer.music.get_volume() - 0.05, 0.0))
+        print("Volume decreased:", pygame.mixer.music.get_volume())
     last_CLK_state = CLK_state
 
 # Set up switch pin
@@ -98,6 +98,7 @@ print("Switch pin configured.")
 # Switch press event
 def switch_pressed(channel):
     print("Switch pressed!")
+    stop_audio()
 
 # Remove existing event detection for the switch pin
 GPIO.remove_event_detect(SW_PIN)
@@ -136,7 +137,7 @@ last_tag_time = 0
 
 # NFC thread
 def check_nfc_thread():
-    global last_tag_id, last_tag_time
+    global last_tag_id, last_tag_time, nfc_audio_map  # Add nfc_audio_map here
     
     # Initialiser Pygame mixer avant de démarrer le thread
     initialize_pygame_mixer()
