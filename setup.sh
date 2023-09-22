@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e  # Exit on error
-
 # Run system update and upgrade
 sudo apt-get update
 sudo apt-get upgrade -y
