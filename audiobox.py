@@ -37,9 +37,14 @@ def load_audio_map():
     try:
         with open('audio_map.txt', 'r') as file:
             lines = file.readlines()
+            line_number = 0  # Ajouter cette ligne pour suivre le numéro de ligne
             for line in lines:
-                tag_id, audio_file = line.strip().split(',')
-                audio_map[tag_id] = audio_file
+                line_number += 1  # Incrémenter le numéro de ligne
+                try:
+                    tag_id, audio_file = line.strip().split(',')
+                    audio_map[tag_id] = audio_file
+                except ValueError:
+                    print(f"Erreur de format dans la ligne {line_number}: {line.strip()}")
     except FileNotFoundError:
         print("Fichier audio_map.txt introuvable.")
         print("Le fichier sera créé lors de l'association de tags NFC avec des fichiers audio.")
