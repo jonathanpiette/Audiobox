@@ -5,7 +5,7 @@ body {
 
 .container {
     width: 100%;
-    margin: 0 20px;
+    /* margin: 0 20px; */
     text-align: center;
     align-items: center;
     justify-content: center;
@@ -13,15 +13,17 @@ body {
 }
 
 .file-input {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-around;
     box-sizing: border-box;
-    margin: 10px 0;
+    margin: 8px;
+    
 }
 
 input[type="text"] {
-    width: 75%;
+    width: 100%;
     min-height: 24px;
     border-radius: 5px;
     padding: 10px;
@@ -35,6 +37,7 @@ input[type="file"] {
 
 button.browse-button {
     min-height: 32px;
+    width: 100px;
     border-radius: 5px;
     background-color: #4CAF50;
     color: white;
@@ -62,4 +65,40 @@ button.download-button {
     color: #4CAF50;
     font-size: 18px;
     margin-right: 5px;
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    /* width: 100%; */
+}
+
+#file-icon {
+    margin-right: 10px; /* Add some spacing between the icon and the text */
+    max-height: 16px;
+    max-width: 16px;
+}
+
+#cancel-icon {
+    margin-right: 10px; /* Add some spacing between the icon and the text */
+    max-height: 16px;
+    max-width: 16px;
+}
+
+.file-icon {
+    width: 16px;  /* Set the desired width */
+    height: 16px; /* Set the desired height */
+}
+
+.cancel-icon {
+    width: 16px;  /* Set the desired width */
+    height: 16px; /* Set the desired height */
+}
+
+ul {
+    list-style-type: none;
+}
+
+.list-container {
+    width: 100%;
 }

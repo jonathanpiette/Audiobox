@@ -10,12 +10,15 @@
     <div class="container">
         <h1>File Upload Page</h1>
             <div class="file-input">
-                <input type="text" id="file-input" placeholder="URL or drag & drop a file here">
-                <input type="file" id="file-upload" style="display: none">
-                <button class="browse-button" onclick="browseForFile()">Browse</button>
-                <img src="file.png" id="file-icon" style="display: none">
+                <div class="file-info">
+                    <input type="text" id="file-input" placeholder="URL or drag & drop a file here">
+                 </div>
+                <input type="file" id="file-upload" multiple style="display: none">
             </div>
-        <button class="download-button">Download</button>
+            <button class="browse-button" onclick="browseForFile()">Browse</button>
+        <ul id="file-list">
+        </ul>
+        <button class="download-button">Upload</button>
     </div>
     <script src="script.js"></script>
 </body>
