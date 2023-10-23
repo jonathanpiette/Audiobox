@@ -1,30 +1,49 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const fileInputs = document.querySelectorAll('.file-input');
-    const downloadButton = document.querySelector('.download-button');
-
-    fileInputs.forEach((input, index) => {
-        const textField = input.querySelector('input[type="text"]');
-        const browseButton = input.querySelector('.browse-button');
-
-        browseButton.addEventListener('click', () => {
-            const fileInput = input.querySelector('input[type="file"]');
-            fileInput.click();
-            fileInput.addEventListener('change', (e) => {
-                const selectedFile = e.target.files[0];
-                textField.value = selectedFile.name;
-                input.classList.add('completed');
-            });
-        });
+function browseForFile() {
+    const fileInput = document.getElementById("file-upload");
+    fileInput.click(); // Trigger the file input click event when the "Browse" button is clicked.
+    fileInput.addEventListener("change", function () {
+        if (fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            document.getElementById("file-input").value = file.name;
+            document.getElementById("file-icon").style.display = "inline"; // Show the file icon.
+        }
     });
+}
 
-    downloadButton.addEventListener('click', () => {
-        fileInputs.forEach((input) => {
-            if (!input.classList.contains('completed')) {
-                // Perform file upload and show progress view here
-                // You may want to use AJAX or fetch to upload the file.
-            }
-        });
+const fileInput = document.getElementById("file-input");
+const fileIcon = document.getElementById("file-icon");
 
-        // Download URLs with yt-dlp here
-    });
+fileInput.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 });
+
+fileInput.addEventListener("dragenter", () => {
+    fileInput.classList.add("dragover");
+});
+
+fileInput.addEventListener("dragleave", () => {
+    fileInput.classList.remove("dragover");
+});
+
+fileInput.addEventListener("drop", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    fileInput.classList.remove("dragover");
+
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        const file = files[0];
+        fileInput.value = file.name;
+        fileIcon.style.display = "inline"; // Show the file icon.
+    }
+});
+
+// Listen for changes to the file input
+fileInput.addEventListener("change", () => {
+    const file = fileInput.files[0];
+    if (file) {
+        fileIcon.style.display = "inline"; // Show the file icon.
+    }
+});
+

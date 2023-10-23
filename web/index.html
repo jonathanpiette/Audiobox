@@ -10,9 +10,10 @@
     <div class="container">
         <h1>File Upload Page</h1>
             <div class="file-input">
-                <input type="text" placeholder="URL or drag & drop a file here">
-                <input type="file" style="display: none">
-                <button class="browse-button">Browse</button>
+                <input type="text" id="file-input" placeholder="URL or drag & drop a file here">
+                <input type="file" id="file-upload" style="display: none">
+                <button class="browse-button" onclick="browseForFile()">Browse</button>
+                <img src="file.png" id="file-icon" style="display: none">
             </div>
         <button class="download-button">Download</button>
     </div>
